@@ -147,13 +147,13 @@ export default function GamePage() {
 
             <DndProvider backend={ isMobile ? TouchBackend : HTML5Backend }>
                 <div ref={ref} className="w-full h-full flex flex-col justify-center items-center grow">
-                    <div className="flex flex-col justify-center rounded-lg overflow-hidden bg-slate-200" style={{width: `${width}px`, height: `${height}px`}}>
+                    <div className="flex flex-col justify-center rounded-3xl overflow-hidden bg-slate-200" style={{width: `${width}px`, height: `${height}px`}}>
                     {
                         board.map((row, rIdx) =>
                             <div key={rIdx} className="w-full flex justify-center" style={{height: `${tileSize}px`}}>
                                 {
                                     row.map((token, cIdx) =>
-                                    <div key={`${rIdx},${cIdx}`} className="flex items-center justify-center" style={{width: `${tileSize}px`, height: `${tileSize}px`}} onClick={() => placeDisk(team, cIdx)}>
+                                    <div key={`${rIdx},${cIdx}`} className="flex items-center justify-center cursor-pointer" style={{width: `${tileSize}px`, height: `${tileSize}px`}} onClick={() => placeDisk(team, cIdx)}>
                                         <div className={`w-[90%] h-[90%] rounded-full ${token ? `bg-${token}-500` : "bg-zinc-800"}`}/>
                                     </div>)
                                 }
