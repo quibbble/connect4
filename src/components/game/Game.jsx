@@ -1,4 +1,4 @@
-import React, { useEffect, useState, forwardRef } from "react";
+import React, { useEffect, useState, forwardRef, useCallback } from "react";
 
 export const Game = forwardRef((props, ref) => {
     // eslint-disable-next-line no-unused-vars
@@ -26,41 +26,28 @@ export const Game = forwardRef((props, ref) => {
     const [tileSize, setTileSize] = useState(0);
     const [width, setWidth] = useState(0);
     const [height, setHeight] = useState(0);
-    useEffect(() => {
-        function handleResize() {
-            const width = 7.5;
-            const height = 6.5;
-            if (!ref || !ref.current) return;
-            if (ref.current.clientHeight/height < ref.current.clientWidth/width) {
-                setWidth(ref.current.clientHeight/height*width);
-                setHeight(ref.current.clientHeight);
-                setTileSize(ref.current.clientHeight/height);
-            } else {
-                setWidth(ref.current.clientWidth);
-                setHeight(ref.current.clientWidth/width*height);
-                setTileSize(ref.current.clientWidth/width);
-            }
+
+    const handleResize = useCallback(() => {
+        const width = 7.5;
+        const height = 6.5;
+        if (!ref || !ref.current) return;
+        if (ref.current.clientHeight/height < ref.current.clientWidth/width) {
+            setWidth(ref.current.clientHeight/height*width);
+            setHeight(ref.current.clientHeight);
+            setTileSize(ref.current.clientHeight/height);
+        } else {
+            setWidth(ref.current.clientWidth);
+            setHeight(ref.current.clientWidth/width*height);
+            setTileSize(ref.current.clientWidth/width);
         }
-        handleResize()
-    });
+    }, [ref])
+
+    useEffect(() => handleResize());
+
     useEffect(() => {
-        function handleResize() {
-            const width = 7.5;
-            const height = 6.5;
-            if (!ref || !ref.current) return;
-            if (ref.current.clientHeight/height < ref.current.clientWidth/width) {
-                setWidth(ref.current.clientHeight/height*width);
-                setHeight(ref.current.clientHeight);
-                setTileSize(ref.current.clientHeight/height);
-            } else {
-                setWidth(ref.current.clientWidth);
-                setHeight(ref.current.clientWidth/width*height);
-                setTileSize(ref.current.clientWidth/width);
-            }
-        }
         window.addEventListener("resize", handleResize);
         return _ => window.removeEventListener("resize", handleResize)
-    }, [ref]);
+    }, [handleResize]);
 
     return (
         <div className="w-full h-full flex flex-col justify-center items-center grow">
