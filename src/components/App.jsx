@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, createRef } from "react";
+import React, { useState, useLayoutEffect, useRef, createRef } from "react";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import { GamePage, HomePage, DownPage, RulesPage, BugsPage } from "@quibbble/boardgame";
 import { Game } from "./game/Game";
@@ -35,7 +35,7 @@ export default function App() {
 
     const [rules, setRules] = useState("");
 
-    useEffect(() => {
+    useLayoutEffect(() => {
       fetch(Rules)
         .then(response => response.text())
         .then(text => setRules(text))
